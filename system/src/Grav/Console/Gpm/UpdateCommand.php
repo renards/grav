@@ -202,6 +202,15 @@ class UpdateCommand extends ConsoleCommand
             }
         }
 
+        // Update with a given package list :
+        // Ensure that no package is updated that is not on the list
+        // when none of the listed packages needs an update
+        if (count($limit_to) === 0 && count($slugs) > 0 && count($only_packages) > 0) {
+            $this->output->writeln('');
+            $this->output->writeln("<red>Nothing to do so far. Exiting...</red>");
+            exit;
+        }
+
         if (!$this->all_yes) {
             // prompt to continue
             $this->output->writeln("");
